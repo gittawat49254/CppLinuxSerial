@@ -6,7 +6,7 @@ file(GLOB_RECURSE CppLinuxSerial_SRC
 file(GLOB_RECURSE CppLinuxSerial_HEADERS
         "${CMAKE_SOURCE_DIR}/include/*.hpp")
 
-add_library(CppLinuxSerial ${CppLinuxSerial_SRC} ${CppLinuxSerial_HEADERS})
+add_library(CppLinuxSerial SHARED ${CppLinuxSerial_SRC} ${CppLinuxSerial_HEADERS})
 
 target_include_directories(CppLinuxSerial PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

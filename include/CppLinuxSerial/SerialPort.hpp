@@ -125,6 +125,9 @@ namespace mn {
             /// \throws		CppLinuxSerial::Exception if state != OPEN.
             void Read(std::string& data);
 
+            /// \brief		Returns number of bytes in the input buffer. called via ioctl (what could go wrong... LMAO)
+            size_t Available();
+
         private:
 
             /// \brief		Returns a populated termios structure for the passed in file descriptor.

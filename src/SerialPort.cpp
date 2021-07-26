@@ -346,7 +346,7 @@ namespace CppLinuxSerial {
 
 		// Canonical input is when read waits for EOL or EOF characters before returning. In non-canonical mode, the rate at which
 		// read() returns is instead controlled by c_cc[VMIN] and c_cc[VTIME]
-		tty.c_lflag		&= ~ICANON;								// Turn off canonical input, which is suitable for pass-through
+		tty.c_lflag		|= ICANON;								// Turn off canonical input, which is suitable for pass-through
 		// Configure echo depending on echo_ boolean
         if(echo_) {
 			tty.c_lflag |= ECHO;
@@ -392,6 +392,18 @@ namespace CppLinuxSerial {
 			throw std::system_error(EFAULT, std::system_category());
 		}
 	}
+
+	// my own implementation of serial::available
+	size_t SerialPort::Available(){
+		int count = 0;
+		if (-1 == ioctl (fileDesc_, TIOCINQ, &count)) {
+			throw std::system_error(EFAULT, std::system_category());
+  		} 
+		else {
+     		return static_cast<size_t> (count);
+  		}
+	}
+	// end of implementation (hope it work of first try)
 
 	void SerialPort::Read(std::string& data)
 	{
